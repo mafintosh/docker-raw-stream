@@ -1,0 +1,36 @@
+{
+  "name": "docker-raw-stream",
+  "version": "0.0.0",
+  "description": "Decode/encode a docker raw stream",
+  "main": "index.js",
+  "dependencies": {
+    "through2": "^0.5.1"
+  },
+  "devDependencies": {
+    "concat-stream": "^1.4.6",
+    "tape": "^2.13.3"
+  },
+  "scripts": {
+    "test": "tape test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mafintosh/docker-raw-stream"
+  },
+  "keywords": [
+    "docker",
+    "raw",
+    "stream",
+    "encode",
+    "decode",
+    "logs",
+    "log",
+    "attach"
+  ],
+  "author": "Mathias Buus",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mafintosh/docker-raw-stream/issues"
+  },
+  "homepage": "https://github.com/mafintosh/docker-raw-stream"
+}
