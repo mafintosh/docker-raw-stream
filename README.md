@@ -6,6 +6,8 @@ Decode/encode a docker raw stream
 npm install docker-raw-stream
 ```
 
+[![build status](http://img.shields.io/travis/mafintosh/docker-raw-stream.svg?style=flat)](http://travis-ci.org/mafintosh/docker-raw-stream)
+
 ## Usage
 
 docker raw streams multiplexes stdout/stderr to a single stream
