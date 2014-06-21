@@ -37,6 +37,10 @@ process.stdin.pipe(encode.stdout)
 encode.pipe(someWritableStream)
 ```
 
+Per default if you end either `encode.stdout` or `encode.stderr` the encode stream will end.
+If you want to have the encode stream be half open use `raw.encode({halfOpen:true})`.
+This will require both `encode.stdout` and `encode.stderr` to end before the encode stream ends.
+
 ## License
 
 MIT

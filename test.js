@@ -9,7 +9,6 @@ tape('stdout', function(t) {
 
   e.stdout.write('hello stdout')
   e.stdout.end()
-  e.stderr.end()
 
   e.pipe(d)
 
@@ -25,7 +24,6 @@ tape('stderr', function(t) {
 
   e.stderr.write('hello stderr')
   e.stderr.end()
-  e.stdout.end()
 
   e.pipe(d)
 
@@ -45,7 +43,6 @@ tape('stdout + stderr', function(t) {
   e.stdout.write('hello stdout #1\n')
   e.stderr.write('hello stderr #2\n')
   e.stdout.write('hello stdout #2\n')
-  e.stderr.end()
   e.stdout.end()
 
   e.pipe(d)
@@ -56,5 +53,27 @@ tape('stdout + stderr', function(t) {
 
   d.stdout.pipe(concat(function(data) {
     t.same(data.toString(), 'hello stdout #1\nhello stdout #2\n')
+  }))
+})
+
+tape('halfOpen', function(t) {
+  var d = raw.decode()
+  var e = raw.encode({halfOpen:true})
+  var ended = false
+
+  e.stderr.write('hello stderr')
+  e.stderr.end(function() {
+    process.nextTick(function() {
+      ended = true
+      e.stdout.end()
+    })
+  })
+
+  e.pipe(d)
+
+  d.stderr.pipe(concat(function(data) {
+    t.ok(ended)
+    t.same(data.toString(), 'hello stderr')
+    t.end()
   }))
 })

@@ -42,11 +42,12 @@ var decode = function() {
   return decoder
 }
 
-var encode = function() {
+var encode = function(opts) {
+  if (!opts) opts = {}
   var flushes = 0
 
   var flush = function(cb) {
-    if (++flushes === 2) return encoder.end(cb)
+    if (++flushes === 2 || !opts.halfOpen) return encoder.end(cb)
     cb()
   }
 
