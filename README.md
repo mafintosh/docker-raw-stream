@@ -22,7 +22,8 @@ var decode = raw.decode()
 decode.stdout.pipe(process.stdout)
 decode.stderr.pipe(process.stderr)
 
-request.post('http://docker-host:2375/containers/f7f65a63a595/attach?stderr=1&stdout=1&stream=1').pipe(decode)
+var url = 'http://docker-host:2375/containers/f7f65a63a595/attach?stderr=1&stdout=1&stream=1'
+request.post(url).pipe(decode)
 ```
 
 You can also use it encode a stream to the docker raw stream format
