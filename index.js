@@ -17,21 +17,25 @@ var decode = function() {
   var transform = function(data, enc, cb) {
     buffer.write(data)
 
-    if (!header) {
-      header = buffer.read(8)
-      if (!header) return cb()
+    while (true) {
+      if (!header) {
+        header = buffer.read(8)
+        if (!header) return cb()
 
-      if (header[0] === 1) next = stdout
-      else next = stderr
+        if (header[0] === 1) next = stdout
+        else next = stderr
 
-      size = header.readUInt32BE(4)
+        size = header.readUInt32BE(4)
+      }
+
+      var chunk = buffer.read(size)
+      if (!chunk) return cb()
+
+      header = null
+      next.write(chunk)
     }
 
-    var chunk = buffer.read(size)
-    if (!chunk) return cb()
-
-    header = null
-    next.write(chunk, enc, cb)
+    next.write(cb)
   }
 
   var decoder = through(transform, flush)
