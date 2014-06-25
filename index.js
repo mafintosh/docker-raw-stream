@@ -1,5 +1,17 @@
 var through = require('through2')
 
+var destroyer = function(stream, stdout, stderr) {
+  var destroyed = false
+  return function() {
+    if (destroyed) return
+    destroyed = true
+
+    stdout.emit('close')
+    stderr.emit('close')
+    stream.emit('close')
+  }
+}
+
 var decode = function() {
   var stdout = through()
   var stderr = through()
@@ -42,6 +54,7 @@ var decode = function() {
 
   decoder.stdout = stdout
   decoder.stderr = stderr
+  decoder.destroy = stdout.destroy = stderr.destroy = destroyer(decoder, stdout, stderr)
 
   return decoder
 }
@@ -65,9 +78,12 @@ var encode = function(opts) {
   }
 
   var encoder = through()
+  var stdout = through(transformer(1), flush)
+  var stderr = through(transformer(2), flush)
 
-  encoder.stdout = through(transformer(1), flush)
-  encoder.stderr = through(transformer(2), flush)
+  encoder.stdout = stdout
+  encoder.stderr = stderr
+  encoder.destroy = stdout.destroy = stderr.destroy = destroyer(encoder, stdout, stderr)
 
   return encoder
 }
