@@ -6,7 +6,7 @@ var destroyer = function(stream, stdout, stderr) {
     if (destroyed) return
     destroyed = true
 
-	if (err) stream.emit('error', err)
+    if (err) stream.emit('error', err)
 
     stdout.emit('close')
     stderr.emit('close')
