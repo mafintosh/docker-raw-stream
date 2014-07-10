@@ -2,9 +2,11 @@ var through = require('through2')
 
 var destroyer = function(stream, stdout, stderr) {
   var destroyed = false
-  return function() {
+  return function(err) {
     if (destroyed) return
     destroyed = true
+
+	if (err) stream.emit('error', err)
 
     stdout.emit('close')
     stderr.emit('close')
