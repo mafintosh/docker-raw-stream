@@ -1,6 +1,6 @@
 {
   "name": "docker-raw-stream",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Decode/encode a docker raw stream",
   "main": "index.js",
   "dependencies": {
