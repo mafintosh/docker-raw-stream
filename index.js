@@ -21,6 +21,7 @@ var decode = function() {
 
   var size = 0
   var header = null
+  var next = null
 
   var flush = function(cb) {
     stdout.end(function() {
